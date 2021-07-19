@@ -26,7 +26,7 @@ namespace Web.Api
         {
             name = HttpUtility.HtmlDecode(name);
             string root = @"D:\Movies";
-            string path = Directory.GetFiles(Path.Combine(root, name)).FirstOrDefault(p => Path.GetExtension(p) == ".mp4");
+            string path = Directory.GetFiles(Path.Combine(root, name)).FirstOrDefault(p => Path.GetExtension(p) == ".mp4" || Path.GetExtension(p) == ".mkv");
             return PhysicalFile(path, "application/octet-stream", enableRangeProcessing: true);
         }
 
