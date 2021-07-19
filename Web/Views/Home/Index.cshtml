@@ -1,0 +1,27 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div>
+    <h1 class="display-4">Welcome</h1>
+</div>
+<div>
+    <ul id="list">
+    </ul>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $.get('api/movie/list', function (data) {
+                if (data && data.length) {
+                    data.forEach(function (name) {
+                        var anchor = $('<a>', { href: "/movie/index?name=" + encodeURI(name) }).text(name)
+                        var li = $('<li>').append(anchor);
+                        $('#list').append(li);
+                    });
+                }
+            })
+        })
+    </script>
+}

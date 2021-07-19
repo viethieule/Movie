@@ -1,0 +1,12 @@
+﻿
+@{
+    ViewData["Title"] = "View";
+}
+
+<div class="text-center">
+    <video class="video-js movie-player" controls>
+        @Html.Raw("<source src=\"/api/getmedia/" + Html.Encode(ViewBag.Name) + "\" type=\"video/mp4\" />")
+        @Html.Raw("<track kind=\"captions\" src=\"/api/getsub/" + Html.Encode(ViewBag.Name) + "\" srclang=\"en\" label=\"English\" default />")
+    </video>
+</div>
+
