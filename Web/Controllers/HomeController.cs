@@ -25,34 +25,6 @@ namespace Web.Controllers
             return View();
         }
 
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
-        [Route("api/getmedia/{name}")]
-        public FileResult GetMedia(string name)
-        {
-            name = HttpUtility.HtmlDecode(name);
-            string root = @"D:\Movies";
-            string path = Directory.GetFiles(Path.Combine(root, name)).FirstOrDefault(p => Path.GetExtension(p) == ".mp4");
-            return PhysicalFile(path, "application/octet-stream", enableRangeProcessing: true);
-        }
-
-        [Route("api/getsub/{name}")]
-        public IActionResult GetSub(string name)
-        {
-            name = HttpUtility.HtmlDecode(name);
-            string root = @"D:\Movies";
-            string path = Directory.GetFiles(Path.Combine(root, name)).FirstOrDefault(p => Path.GetExtension(p) == ".vtt");
-            if (string.IsNullOrEmpty(path))
-            {
-                return NotFound();
-            }
-
-            return PhysicalFile(path, "application/octet-stream");
-        }
-
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

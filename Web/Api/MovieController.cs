@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace Web.Api
 {
@@ -18,6 +19,29 @@ namespace Web.Api
             string[] movies = Directory.GetDirectories(root).Select(p => new DirectoryInfo(p).Name).ToArray();
 
             return Ok(movies);
+        }
+
+        [Route("{name}")]
+        public FileResult Media(string name)
+        {
+            name = HttpUtility.HtmlDecode(name);
+            string root = @"D:\Movies";
+            string path = Directory.GetFiles(Path.Combine(root, name)).FirstOrDefault(p => Path.GetExtension(p) == ".mp4");
+            return PhysicalFile(path, "application/octet-stream", enableRangeProcessing: true);
+        }
+
+        [Route("{name}")]
+        public IActionResult Subtitle(string name)
+        {
+            name = HttpUtility.HtmlDecode(name);
+            string root = @"D:\Movies";
+            string path = Directory.GetFiles(Path.Combine(root, name)).FirstOrDefault(p => Path.GetExtension(p) == ".vtt");
+            if (string.IsNullOrEmpty(path))
+            {
+                return NotFound();
+            }
+
+            return PhysicalFile(path, "application/octet-stream");
         }
     }
 }
