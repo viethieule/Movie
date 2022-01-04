@@ -1,0 +1,25 @@
+﻿@model IEnumerable<Web.Models.MovieSearchViewModel>
+
+@{
+    ViewData["Title"] = "Search for " + ViewBag.SearchTerm;
+}
+
+<h1>Search</h1>
+
+<table class="table">
+    <tbody>
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                <img src="@Html.DisplayFor(modelItem => item.ImageSmallUrl)" />
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TitleLong)
+            </td>
+            <td>
+                @Html.ActionLink("Download", "Download", new { hash = item.Hash, title = item.TitleLong })
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
